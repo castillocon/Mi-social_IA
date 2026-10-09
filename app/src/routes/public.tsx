@@ -54,7 +54,7 @@ publicRoutes.get("/data-deletion", (c) => {
           Recibimos tu solicitud. Código de confirmación: <strong>{code}</strong>. Los datos se eliminan en un plazo máximo de 30 días.
         </p>
       ) : null}
-      <p>Para eliminar los datos que Mi@Social_ia guarda sobre tu cuenta de Meta:</p>
+      <p>Para eliminar los datos que Mi@Social_ia (la herramienta de redes sociales de choco.uy) guarda sobre tu cuenta de Meta:</p>
       <ol>
         <li>
           En Facebook, entrá a <em>Configuración → Seguridad e inicio de sesión → Apps y sitios web</em> (o{" "}
