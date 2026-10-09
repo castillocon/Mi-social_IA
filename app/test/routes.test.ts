@@ -7,26 +7,38 @@ import { approvePost, createDraft, rejectPost, validateIgCaption, ValidationErro
 
 describe("rutas", () => {
   it("/health es público", async () => {
-    const res = await SELF.fetch("https://social.choco.uy/health");
+    const res = await SELF.fetch("https://misocial-ia.example.workers.dev/health");
     expect(res.status).toBe(200);
     expect(await res.json()).toMatchObject({ ok: true, app: "misocial-ia" });
   });
 
   it.each(["/privacy", "/data-deletion", "/terms"])("%s es público", async (path) => {
-    const res = await SELF.fetch(`https://social.choco.uy${path}`);
+    const res = await SELF.fetch(`https://misocial-ia.example.workers.dev${path}`);
     expect(res.status).toBe(200);
     expect(await res.text()).toContain("choco.uy");
   });
 
+  it("/media sirve solo claves aleatorias existentes, sin Access", async () => {
+    const key = "0123456789abcdef0123456789abcdef.jpg";
+    await env.MEDIA.put(key, new Uint8Array([0xff, 0xd8, 0xff, 0xe0]));
+    const ok = await SELF.fetch(`https://misocial-ia.example.workers.dev/media/${key}`);
+    expect(ok.status).toBe(200);
+    expect(ok.headers.get("Content-Type")).toBe("image/jpeg");
+    expect(new Uint8Array(await ok.arrayBuffer())).toEqual(new Uint8Array([0xff, 0xd8, 0xff, 0xe0]));
+    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/media/fedcba9876543210fedcba9876543210.jpg")).status).toBe(404);
+    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/media/abc.jpg")).status).toBe(404);
+    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/media/..%2Fsecret")).status).toBe(404);
+  });
+
   it("la UI exige el JWT de Access", async () => {
-    expect((await SELF.fetch("https://social.choco.uy/")).status).toBe(403);
-    const forged = await SELF.fetch("https://social.choco.uy/", { headers: { "Cf-Access-Jwt-Assertion": "a.b.c" } });
+    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/")).status).toBe(403);
+    const forged = await SELF.fetch("https://misocial-ia.example.workers.dev/", { headers: { "Cf-Access-Jwt-Assertion": "a.b.c" } });
     expect(forged.status).toBe(403);
   });
 
   it("el bypass de desarrollo no funciona fuera de localhost", async () => {
     // DEV_BYPASS_ACCESS no está definido en tests; aun definido, solo aplica a localhost.
-    expect((await SELF.fetch("https://social.choco.uy/")).status).toBe(403);
+    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/")).status).toBe(403);
   });
 
   it("verifyAccessJwt rechaza sin configuración", async () => {

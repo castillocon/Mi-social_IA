@@ -78,7 +78,7 @@ describe("Facebook", () => {
     const id = await approvedPost(["facebook"], minutes(T0, -1), T0);
     const meta = fakeMeta();
     await runPublisher({ env, meta: meta.client, now: T0 });
-    expect(meta.calls[0]?.args[2]).toMatchObject({ message: "Hola FB", imageUrl: "https://media.choco.uy/abc123.jpg" });
+    expect(meta.calls[0]?.args[2]).toMatchObject({ message: "Hola FB", imageUrl: `${env.MEDIA_BASE_URL}/abc123.jpg` });
     expect(meta.calls[0]?.args[2]).not.toHaveProperty("scheduledPublishTime");
     expect(await postStatus(id)).toBe("published");
   });

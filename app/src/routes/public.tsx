@@ -1,4 +1,4 @@
-// Rutas públicas (excluidas de Cloudflare Access): /health, /privacy, /data-deletion, /terms.
+// Rutas públicas (excluidas de Cloudflare Access): /health, /privacy, /data-deletion, /terms y /media/*.
 import { Hono } from "hono";
 import type { AppEnv } from "../lib/access";
 import { audit } from "../lib/audit";
@@ -15,7 +15,30 @@ publicRoutes.get("/health", async (c) => {
   } catch {
     db = "error";
   }
-  return c.json({ ok: db === "ok", app: "misocial-ia", db, time: new Date().toISOString() }, db === "ok" ? 200 : 503);
+  const configured = !c.env.PUBLIC_BASE_URL.includes("CAMBIAR") && c.env.ACCESS_AUD !== "";
+  return c.json(
+    { ok: db === "ok", app: "misocial-ia", db, configured, time: new Date().toISOString() },
+    db === "ok" ? 200 : 503,
+  );
+});
+
+// Imágenes aprobadas para Meta. Solo claves aleatorias de 128 bits (no adivinables) en JPEG.
+export const MEDIA_KEY = /^[a-f0-9]{32}\.jpg$/;
+
+publicRoutes.get("/media/:key", async (c) => {
+  const key = c.req.param("key");
+  if (!MEDIA_KEY.test(key)) return c.notFound();
+  const object = await c.env.MEDIA.get(key);
+  if (!object) return c.notFound();
+  return new Response(object.body, {
+    headers: {
+      "Content-Type": "image/jpeg",
+      "Content-Length": String(object.size),
+      "Cache-Control": "public, max-age=86400, immutable",
+      ETag: object.httpEtag,
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
 });
 
 publicRoutes.get("/privacy", (c) =>

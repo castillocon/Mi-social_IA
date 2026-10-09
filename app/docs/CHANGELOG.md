@@ -36,3 +36,20 @@ Validado: `tsc --noEmit`, `vitest run` (25/25), `wrangler dev` (health 200, `/` 
 ## 2026-10-09 — Email de contacto
 
 - `/privacy`, `/data-deletion` y `/terms` usan el email confirmado `chocouycorreo@gmail.com`.
+
+## 2026-10-09 — Decisión: workers.dev en lugar de social.choco.uy
+
+**Motivo:** la auditoría mostró que choco.uy usa los DNS de afraid.org, no Cloudflare, así que no hay Custom Domain,
+dominio de R2 ni Access sobre choco.uy. Decidido con el usuario: usar workers.dev ahora y mudar a choco.uy más adelante.
+
+Esto **reemplaza** dos reglas del prompt original ("Deshabilitar workers.dev" y `media.choco.uy` sobre R2):
+
+- `workers_dev: true` como **única** URL, protegida con Cloudflare Access; `preview_urls: false` sigue apagado.
+  El Worker además valida el JWT de Access por su cuenta: sin JWT válido responde 403.
+- Sin Custom Domain. `PUBLIC_BASE_URL` y `MEDIA_BASE_URL` llevan `CAMBIAR` hasta conocer el subdominio workers.dev.
+- Imágenes: el bucket R2 queda **privado** y el Worker las sirve en `/media/<32 hex>.jpg` (ruta pública,
+  excluida de Access). No se usa `r2.dev` (Cloudflare lo desaconseja para producción).
+- `/health` informa `configured: false` mientras falte el subdominio o la configuración de Access.
+
+Para mudar a choco.uy: zona en Cloudflare → `routes` con Custom Domain → nueva aplicación de Access → actualizar
+las URLs en la app de Meta → reconectar Meta.

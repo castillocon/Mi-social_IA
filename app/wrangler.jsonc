@@ -4,10 +4,10 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
 
-  // Sin acceso que esquive Cloudflare Access: solo el Custom Domain.
-  "workers_dev": false,
+  // choco.uy no está en Cloudflare (DNS en afraid.org): la única URL es workers.dev, protegida con
+  // Cloudflare Access. Preview URLs apagadas para que no exista otra entrada sin Access.
+  "workers_dev": true,
   "preview_urls": false,
-  "routes": [{ "pattern": "social.choco.uy", "custom_domain": true }],
 
   "observability": { "enabled": true },
 
@@ -32,8 +32,10 @@
   "vars": {
     "APP_NAME": "Mi@Social_ia",
     "META_API_VERSION": "v26.0",
-    "MEDIA_BASE_URL": "https://media.choco.uy",
-    "PUBLIC_BASE_URL": "https://social.choco.uy",
+    // Reemplazar CAMBIAR por el subdominio workers.dev de la cuenta (FASE 2).
+    "PUBLIC_BASE_URL": "https://misocial-ia.CAMBIAR.workers.dev",
+    // Imágenes servidas por el propio Worker en una ruta pública (Instagram necesita una URL pública).
+    "MEDIA_BASE_URL": "https://misocial-ia.CAMBIAR.workers.dev/media",
     // Completar en FASE 2 con los datos de la aplicación de Access.
     "ACCESS_TEAM_DOMAIN": "",
     "ACCESS_AUD": "",

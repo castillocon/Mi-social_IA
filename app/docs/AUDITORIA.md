@@ -47,3 +47,6 @@ Wrangler. Por eso casi toda la auditoría del prompt **sigue pendiente** y hay q
 | — | D1 | 18 bases; `misocial-ia` no existe (libre). |
 | 9 | choco.uy | El sitio **no respondió** ("No es posible conectar con el servidor remoto"). Falta saber dónde está la tienda y qué fuente de contenido usar. |
 | 7, 8, 10, 11 | Access, AI Gateway, Meta, límites | Pendientes (panel y documentación). |
+
+**Decisión (2026-10-09):** se usa `misocial-ia.<subdominio>.workers.dev` protegido con Access; choco.uy se mudará más
+adelante. Ver `CHANGELOG.md`.
