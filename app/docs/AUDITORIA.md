@@ -33,3 +33,17 @@ Wrangler. Por eso casi toda la auditoría del prompt **sigue pendiente** y hay q
 - **`database_id` de D1** es un placeholder hasta crear la base en la FASE 2.
 - **Access sin configurar** = la UI responde 403 a todo (falla cerrada), por diseño.
 - Email de contacto de `/privacy`, `/data-deletion` y `/terms`: `chocouycorreo@gmail.com` (confirmado el 2026-10-09).
+
+## Resultado en el PC (2026-10-09 21:18 UTC)
+
+| # | Punto | Resultado |
+|---|---|---|
+| 1 | Versiones | Node 24.20.0, npm 11.7.0, Wrangler del proyecto 4.149.0. El global (4.87.0) está desactualizado: usar siempre `npx wrangler`. |
+| 2 | Cuenta | OAuth de castilloconsultores@gmail.com, una sola cuenta. Scopes suficientes para Workers, D1, R2, AI y Email. No incluye Access/Zero Trust: esa parte va por el panel. Plan Workers Paid: confirmar en el panel. |
+| 3 | Zona choco.uy | **BLOQUEANTE: los nameservers son `ns1–4.afraid.org` (FreeDNS), no Cloudflare.** Sin la zona en Cloudflare no hay Custom Domain del Worker, dominio propio de R2 ni Access sobre `social.choco.uy`. |
+| 4 | DNS `social` / `media` | No existen (sin conflicto). |
+| 5 | Worker `misocial-ia` | No existe (código 10007): el nombre está libre. |
+| 6 | R2 | Habilitado, 15 buckets; `misocial-ia-media` no existe (libre). |
+| — | D1 | 18 bases; `misocial-ia` no existe (libre). |
+| 9 | choco.uy | El sitio **no respondió** ("No es posible conectar con el servidor remoto"). Falta saber dónde está la tienda y qué fuente de contenido usar. |
+| 7, 8, 10, 11 | Access, AI Gateway, Meta, límites | Pendientes (panel y documentación). |

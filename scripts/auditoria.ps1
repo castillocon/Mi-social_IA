@@ -39,10 +39,14 @@ function Section($title) { "`n===== $title =====" }
     try { Resolve-DnsName $h -ErrorAction Stop | Format-Table -AutoSize | Out-String } catch { "sin registro: $($_.Exception.Message)" }
   }
   "--- choco.uy NS (debe mostrar *.ns.cloudflare.com)"
-  try { Resolve-DnsName choco.uy -Type NS -ErrorAction Stop | Select-Object -ExpandProperty NameHost } catch { $_.Exception.Message }
+  try { Resolve-DnsName choco.uy -Type NS -ErrorAction Stop | Where-Object { $_.Type -eq 'NS' } | ForEach-Object { $_.NameHost } } catch { $_.Exception.Message }
+  "--- choco.uy y www.choco.uy (A/CNAME)"
+  foreach ($h in "choco.uy", "www.choco.uy") {
+    try { Resolve-DnsName $h -ErrorAction Stop | Where-Object { $_.Type -in 'A','AAAA','CNAME' } | ForEach-Object { "$h $($_.Type) $($_.IPAddress)$($_.NameHost)" } } catch { "$h sin registro: $($_.Exception.Message)" }
+  }
 
-  Section "9. Fuente de contenido de choco.uy (solo 3 lecturas)"
-  foreach ($u in "https://choco.uy/robots.txt", "https://choco.uy/sitemap.xml", "https://choco.uy/feed") {
+  Section "9. Fuente de contenido de choco.uy (4 lecturas livianas)"
+  foreach ($u in "https://choco.uy/robots.txt", "https://choco.uy/sitemap.xml", "https://www.choco.uy/robots.txt", "http://choco.uy/") {
     try {
       $r = Invoke-WebRequest $u -UseBasicParsing -TimeoutSec 15 -ErrorAction Stop
       "--- $u -> $($r.StatusCode) ($($r.Headers['Content-Type']))"
