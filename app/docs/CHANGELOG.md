@@ -109,3 +109,13 @@ Validado por el usuario en ventana de incógnito:
   `17841420719322291`; tasks incluyen `MANAGE`, `CREATE_CONTENT` y `MODERATE`.
 - `content_publishing_limit` del Instagram: `quota_total: 100`, `quota_duration: 86400` (100 publicaciones por API
   cada 24 h, confirma el prompt). La Graph API **v26.0** responde, así que `META_API_VERSION` es válida.
+
+## 2026-10-09 — FASE 3, paso 7: pasar a Live (pendiente)
+
+- La app sigue en **modo desarrollo**. La pantalla "Publicar" no muestra botón ni interruptor para pasar a Live,
+  aun con el borrador de App Review vacío (no se envió ninguna solicitud de revisión).
+- La única sección pendiente es la **verificación del negocio** ("authentic chocolate experience", no verificado):
+  todo indica que Meta la exige para publicar la app.
+- El caso de uso "Insertar contenido… en otros sitios web" (oEmbed) quedó agregado sin permisos y no se puede quitar.
+- Plan: seguir con las FASES 4–6 en modo desarrollo (los posts de la app solo los ven personas con rol en la app)
+  y hacer la verificación del negocio en paralelo.
