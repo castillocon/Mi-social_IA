@@ -2,3 +2,4 @@ backups/
 node_modules/
 .wrangler/
 .dev.vars
+auditoria-resultado.txt
