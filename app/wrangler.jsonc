@@ -21,8 +21,7 @@
     {
       "binding": "DB",
       "database_name": "misocial-ia",
-      // Reemplazar por el ID real tras `wrangler d1 create misocial-ia` (FASE 2).
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "f4e45585-f249-46d6-afed-2d7d565956a8",
       "migrations_dir": "migrations"
     }
   ],
