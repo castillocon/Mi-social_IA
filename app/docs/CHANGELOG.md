@@ -107,3 +107,5 @@ Validado por el usuario en ventana de incógnito:
 - Secrets cargados en `misocial-ia`: `META_APP_ID`, `META_APP_SECRET`, `META_CONFIG_ID`, `TOKEN_ENC_KEY`.
 - Graph API Explorer (`me/accounts`): página **Choco.uy** `103542077711873`, Instagram business account
   `17841420719322291`; tasks incluyen `MANAGE`, `CREATE_CONTENT` y `MODERATE`.
+- `content_publishing_limit` del Instagram: `quota_total: 100`, `quota_duration: 86400` (100 publicaciones por API
+  cada 24 h, confirma el prompt). La Graph API **v26.0** responde, así que `META_API_VERSION` es válida.
