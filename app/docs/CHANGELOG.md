@@ -53,3 +53,8 @@ Esto **reemplaza** dos reglas del prompt original ("Deshabilitar workers.dev" y 
 
 Para mudar a choco.uy: zona en Cloudflare → `routes` con Custom Domain → nueva aplicación de Access → actualizar
 las URLs en la app de Meta → reconectar Meta.
+
+## 2026-10-09 — Acceso a la UI
+
+- Cloudflare Access (OTP por email) permitirá **dos** emails: `castilloconsultores@gmail.com` y
+  `chocouycorreo@gmail.com`. Ambos pueden aprobar; el email del JWT queda registrado como aprobador en cada post.
