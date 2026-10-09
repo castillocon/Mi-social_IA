@@ -1,0 +1,7 @@
+# Copiar a .dev.vars (ignorado por Git) para `wrangler dev`. Nunca commitear valores reales.
+DEV_BYPASS_ACCESS=true
+DEV_USER_EMAIL=dev@localhost
+TOKEN_ENC_KEY=
+META_APP_ID=
+META_APP_SECRET=
+META_CONFIG_ID=

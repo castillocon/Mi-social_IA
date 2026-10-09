@@ -1,0 +1,45 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "misocial-ia",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+
+  // Sin acceso que esquive Cloudflare Access: solo el Custom Domain.
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "social.choco.uy", "custom_domain": true }],
+
+  "observability": { "enabled": true },
+
+  // En `wrangler dev` la URL queda en localhost (habilita DEV_BYPASS_ACCESS solo en local).
+  "dev": { "host": "localhost" },
+
+  // Cron Triggers en UTC: publicador cada minuto y tareas diarias a las 09:10 UTC (06:10 Montevideo).
+  "triggers": { "crons": ["* * * * *", "10 9 * * *"] },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "misocial-ia",
+      // Reemplazar por el ID real tras `wrangler d1 create misocial-ia` (FASE 2).
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "misocial-ia-media" }],
+
+  "vars": {
+    "APP_NAME": "Mi@Social_ia",
+    "META_API_VERSION": "v26.0",
+    "MEDIA_BASE_URL": "https://media.choco.uy",
+    "PUBLIC_BASE_URL": "https://social.choco.uy",
+    // Completar en FASE 2 con los datos de la aplicación de Access.
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": "",
+    "DISPLAY_TZ": "America/Montevideo"
+  }
+
+  // Secrets (wrangler secret put): META_APP_ID, META_APP_SECRET, META_CONFIG_ID,
+  // TOKEN_ENC_KEY, ANTHROPIC_API_KEY.
+}
