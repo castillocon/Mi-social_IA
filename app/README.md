@@ -46,5 +46,5 @@ node -e "process.stdout.write(require('crypto').randomBytes(32).toString('base64
 ## Fases
 
 - [x] FASE 1 — Proyecto base (validado en local)
-- [ ] FASE 2 — Recursos Cloudflare (requiere tu confirmación tras la auditoría)
+- [x] FASE 2 — Recursos Cloudflare (D1, R2, dos Workers en workers.dev, Access)
 - [ ] FASES 3–10

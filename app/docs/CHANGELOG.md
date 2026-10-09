@@ -70,3 +70,11 @@ las URLs en la app de Meta → reconectar Meta.
 - Variables: `APP_BASE_URL` (app), `PUBLIC_BASE_URL` y `MEDIA_BASE_URL` (Worker público).
 - Scripts: `npm run deploy:public` y `npm run deploy:all` (typecheck + tests + ambos deploys).
 - Pendiente: sumar `chocouycorreo@gmail.com` editando la política en Zero Trust → Access → Applications.
+
+## 2026-10-09 — FASE 2 validada
+
+Validado por el usuario en ventana de incógnito:
+- `misocial-ia.castilloconsultores.workers.dev/` pide login de Access y, tras el login, muestra el panel con la sesión.
+- `misocial-ia-public…/health` → `ok: true`, `configured: true`.
+- `misocial-ia-public…/privacy` se ve sin login.
+- La preview URL `7a3e6163-misocial-ia…` no expone el panel.
