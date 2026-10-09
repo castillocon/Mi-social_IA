@@ -1,4 +1,4 @@
-// Rutas públicas (excluidas de Cloudflare Access): /health, /privacy, /data-deletion, /terms y /media/*.
+// Rutas públicas del Worker misocial-ia-public: /health, /privacy, /data-deletion, /terms y /media/*.
 import { Hono } from "hono";
 import type { AppEnv } from "../lib/access";
 import { audit } from "../lib/audit";
@@ -15,7 +15,7 @@ publicRoutes.get("/health", async (c) => {
   } catch {
     db = "error";
   }
-  const configured = !c.env.PUBLIC_BASE_URL.includes("CAMBIAR") && c.env.ACCESS_AUD !== "";
+  const configured = !c.env.PUBLIC_BASE_URL.includes("CAMBIAR");
   return c.json(
     { ok: db === "ok", app: "misocial-ia", db, configured, time: new Date().toISOString() },
     db === "ok" ? 200 : 503,

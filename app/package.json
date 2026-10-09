@@ -10,7 +10,9 @@
     "test": "vitest run",
     "cf-typegen": "wrangler types --strict-vars=false",
     "db:migrate:local": "wrangler d1 migrations apply misocial-ia --local",
-    "db:migrate:remote": "wrangler d1 migrations apply misocial-ia --remote"
+    "db:migrate:remote": "wrangler d1 migrations apply misocial-ia --remote",
+    "deploy:public": "wrangler deploy -c wrangler.public.jsonc",
+    "deploy:all": "npm run typecheck && npm test && wrangler deploy && wrangler deploy -c wrangler.public.jsonc"
   },
   "dependencies": {
     "hono": "4.13.13"

@@ -3,17 +3,21 @@ import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import { decryptSecret, encryptSecret, maskToken } from "../src/lib/crypto";
 import { verifyAccessJwt } from "../src/lib/access";
+import { publicApp } from "../src/public-worker";
 import { approvePost, createDraft, rejectPost, validateIgCaption, ValidationError } from "../src/posts";
 
-describe("rutas", () => {
+const PUB = "https://misocial-ia-public.example.workers.dev";
+const pub = (path: string) => publicApp.request(`${PUB}${path}`, {}, env);
+
+describe("Worker público", () => {
   it("/health es público", async () => {
-    const res = await SELF.fetch("https://misocial-ia.example.workers.dev/health");
+    const res = await pub("/health");
     expect(res.status).toBe(200);
     expect(await res.json()).toMatchObject({ ok: true, app: "misocial-ia" });
   });
 
   it.each(["/privacy", "/data-deletion", "/terms"])("%s es público", async (path) => {
-    const res = await SELF.fetch(`https://misocial-ia.example.workers.dev${path}`);
+    const res = await pub(path);
     expect(res.status).toBe(200);
     expect(await res.text()).toContain("choco.uy");
   });
@@ -21,14 +25,28 @@ describe("rutas", () => {
   it("/media sirve solo claves aleatorias existentes, sin Access", async () => {
     const key = "0123456789abcdef0123456789abcdef.jpg";
     await env.MEDIA.put(key, new Uint8Array([0xff, 0xd8, 0xff, 0xe0]));
-    const ok = await SELF.fetch(`https://misocial-ia.example.workers.dev/media/${key}`);
+    const ok = await pub(`/media/${key}`);
     expect(ok.status).toBe(200);
     expect(ok.headers.get("Content-Type")).toBe("image/jpeg");
     expect(new Uint8Array(await ok.arrayBuffer())).toEqual(new Uint8Array([0xff, 0xd8, 0xff, 0xe0]));
-    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/media/fedcba9876543210fedcba9876543210.jpg")).status).toBe(404);
-    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/media/abc.jpg")).status).toBe(404);
-    expect((await SELF.fetch("https://misocial-ia.example.workers.dev/media/..%2Fsecret")).status).toBe(404);
+    expect((await pub("/media/fedcba9876543210fedcba9876543210.jpg")).status).toBe(404);
+    expect((await pub("/media/abc.jpg")).status).toBe(404);
+    expect((await pub("/media/..%2Fsecret")).status).toBe(404);
   });
+
+  it("no expone la UI ni rutas privadas", async () => {
+    expect((await pub("/")).status).toBe(404);
+    expect((await pub("/auth/callback")).status).toBe(404);
+  });
+});
+
+describe("Worker de la app (detrás de Access)", () => {
+  it.each(["/", "/health", "/privacy", "/media/0123456789abcdef0123456789abcdef.jpg"])(
+    "%s exige el JWT de Access",
+    async (path) => {
+      expect((await SELF.fetch(`https://misocial-ia.example.workers.dev${path}`)).status).toBe(403);
+    },
+  );
 
   it("la UI exige el JWT de Access", async () => {
     expect((await SELF.fetch("https://misocial-ia.example.workers.dev/")).status).toBe(403);

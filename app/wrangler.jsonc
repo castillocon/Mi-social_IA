@@ -4,8 +4,8 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
 
-  // choco.uy no está en Cloudflare (DNS en afraid.org): la única URL es workers.dev, protegida con
-  // Cloudflare Access. Preview URLs apagadas para que no exista otra entrada sin Access.
+  // choco.uy no está en Cloudflare (DNS en afraid.org): la app vive en workers.dev, entera detrás de
+  // Cloudflare Access (producción y previews). Las rutas públicas están en wrangler.public.jsonc.
   "workers_dev": true,
   "preview_urls": false,
 
@@ -31,12 +31,13 @@
   "vars": {
     "APP_NAME": "Mi@Social_ia",
     "META_API_VERSION": "v26.0",
-    "PUBLIC_BASE_URL": "https://misocial-ia.castilloconsultores.workers.dev",
-    // Imágenes servidas por el propio Worker en una ruta pública (Instagram necesita una URL pública).
-    "MEDIA_BASE_URL": "https://misocial-ia.castilloconsultores.workers.dev/media",
-    // Completar en FASE 2 con los datos de la aplicación de Access.
-    "ACCESS_TEAM_DOMAIN": "",
-    "ACCESS_AUD": "",
+    "APP_BASE_URL": "https://misocial-ia.castilloconsultores.workers.dev",
+    // Worker público (páginas legales e imágenes; Instagram necesita una URL pública).
+    "PUBLIC_BASE_URL": "https://misocial-ia-public.castilloconsultores.workers.dev",
+    "MEDIA_BASE_URL": "https://misocial-ia-public.castilloconsultores.workers.dev/media",
+    // Aplicación de Access del Worker (pestaña Access → Application values).
+    "ACCESS_TEAM_DOMAIN": "https://castillouy.cloudflareaccess.com",
+    "ACCESS_AUD": "899c6f3376716b115cca4c8a2f414b2e0b70fa63016bce2a107369fee72c7ba7",
     "DISPLAY_TZ": "America/Montevideo"
   }
 

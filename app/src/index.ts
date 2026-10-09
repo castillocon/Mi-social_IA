@@ -3,20 +3,14 @@ import { requireAccess, type AppEnv } from "./lib/access";
 import { withJobRun } from "./lib/audit";
 import { GraphClient } from "./lib/meta";
 import { runPublisher } from "./publisher";
-import { publicRoutes } from "./routes/public";
+import { securityHeaders } from "./lib/headers";
 import { uiRoutes } from "./routes/ui";
 
 const app = new Hono<AppEnv>();
 
-app.use("*", async (c, next) => {
-  await next();
-  c.header("X-Content-Type-Options", "nosniff");
-  c.header("Referrer-Policy", "strict-origin-when-cross-origin");
-  c.header("X-Frame-Options", "DENY");
-});
-
-app.route("/", publicRoutes);
-app.use("*", requireAccess); // todo lo que sigue exige Cloudflare Access
+app.use("*", securityHeaders);
+// Toda la app exige Cloudflare Access. Las rutas públicas viven en el Worker misocial-ia-public.
+app.use("*", requireAccess);
 app.route("/", uiRoutes);
 
 const PUBLISHER_CRON = "* * * * *";

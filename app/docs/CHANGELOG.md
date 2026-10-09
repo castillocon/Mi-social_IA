@@ -58,3 +58,15 @@ las URLs en la app de Meta → reconectar Meta.
 
 - Cloudflare Access (OTP por email) permitirá **dos** emails: `castilloconsultores@gmail.com` y
   `chocouycorreo@gmail.com`. Ambos pueden aprobar; el email del JWT queda registrado como aprobador en cada post.
+
+## 2026-10-09 — FASE 2: Access y Worker público
+
+- Access del Worker `misocial-ia` activado en modo **All traffic** (producción y previews), política
+  *Cloudflare account members*. Team domain `https://castillouy.cloudflareaccess.com`; AUD cargado en `wrangler.jsonc`.
+- El panel no permite excepciones por ruta en workers.dev, así que las rutas públicas pasan a un **segundo Worker**,
+  `misocial-ia-public` (`wrangler.public.jsonc`, entrada `src/public-worker.ts`): `/privacy`, `/data-deletion`,
+  `/terms`, `/health` y `/media/<clave>`. Sin crons ni UI; usa la misma D1 y el mismo R2.
+- La app `misocial-ia` ya no expone nada público: todo exige el JWT de Access.
+- Variables: `APP_BASE_URL` (app), `PUBLIC_BASE_URL` y `MEDIA_BASE_URL` (Worker público).
+- Scripts: `npm run deploy:public` y `npm run deploy:all` (typecheck + tests + ambos deploys).
+- Pendiente: sumar `chocouycorreo@gmail.com` editando la política en Zero Trust → Access → Applications.
