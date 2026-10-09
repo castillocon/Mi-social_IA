@@ -32,3 +32,7 @@ modificó ni desplegó ningún recurso.
 - 25 tests (Vitest en el runtime de Workers).
 
 Validado: `tsc --noEmit`, `vitest run` (25/25), `wrangler dev` (health 200, `/` 403 sin Access, crons → `job_runs`).
+
+## 2026-10-09 — Email de contacto
+
+- `/privacy`, `/data-deletion` y `/terms` usan el email confirmado `chocouycorreo@gmail.com`.

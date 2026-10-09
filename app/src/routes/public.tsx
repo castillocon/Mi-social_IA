@@ -6,7 +6,7 @@ import { Layout } from "./layout";
 
 export const publicRoutes = new Hono<AppEnv>();
 
-const CONTACT = "hola@choco.uy"; // TODO(FASE 3): confirmar el email de contacto de choco.uy
+const CONTACT = "chocouycorreo@gmail.com";
 
 publicRoutes.get("/health", async (c) => {
   let db = "ok";

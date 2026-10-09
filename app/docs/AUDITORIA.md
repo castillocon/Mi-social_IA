@@ -32,4 +32,4 @@ Wrangler. Por eso casi toda la auditoría del prompt **sigue pendiente** y hay q
   duplicar. Mitigación: el reclamo colgado no se reintenta solo, y los reintentos por error genérico se limitan a 5.
 - **`database_id` de D1** es un placeholder hasta crear la base en la FASE 2.
 - **Access sin configurar** = la UI responde 403 a todo (falla cerrada), por diseño.
-- Email de contacto en `/privacy` (`hola@choco.uy`) es provisorio: confirmarlo antes de la FASE 3.
+- Email de contacto de `/privacy`, `/data-deletion` y `/terms`: `chocouycorreo@gmail.com` (confirmado el 2026-10-09).
