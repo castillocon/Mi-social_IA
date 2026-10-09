@@ -78,3 +78,13 @@ Validado por el usuario en ventana de incógnito:
 - `misocial-ia-public…/health` → `ok: true`, `configured: true`.
 - `misocial-ia-public…/privacy` se ve sin login.
 - La preview URL `7a3e6163-misocial-ia…` no expone el panel.
+
+## 2026-10-09 — FASE 3, paso 1: requisitos de las cuentas
+
+- Portfolio comercial "authentic chocolate experience" con la página **Choco.uy** y el Instagram **@choco.uy**
+  (cuenta profesional, categoría Producto/servicio) vinculados.
+- Publicar desde Business Suite en ambas redes funciona: sin bloqueo de PPA visible.
+- El administrador del portfolio entraba con la identidad de Instagram. Para la API se usa el **perfil personal de
+  Facebook "Ana Claudia Vallejo Mariño"**, ahora con **acceso total** al portfolio, a la página y al Instagram.
+- Ese acceso a la página viene **a través del portfolio**: si la API lo exige, habrá que sumar `ads_management` y
+  `ads_read` (solo si aparece el error).
