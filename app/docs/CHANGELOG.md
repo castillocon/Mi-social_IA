@@ -88,3 +88,14 @@ Validado por el usuario en ventana de incógnito:
   Facebook "Ana Claudia Vallejo Mariño"**, ahora con **acceso total** al portfolio, a la página y al Instagram.
 - Ese acceso a la página viene **a través del portfolio**: si la API lo exige, habrá que sumar `ads_management` y
   `ads_read` (solo si aparece el error).
+
+## 2026-10-09 — FASE 3, pasos 3c–3d: app de Meta
+
+- App **Mi@Social_ia** (Meta aceptó la `@`), App ID `1781965366358086`, en modo desarrollo ("Sin publicar"),
+  creada con el perfil de Facebook de Ana Claudia y conectada al portfolio "authentic chocolate experience".
+- Casos de uso: "Administrar todo en tu página" y "Administrar mensajes y contenido en Instagram" (variante
+  **API con inicio de sesión con Facebook**). Los 8 permisos del MVP en "Listo para la prueba".
+  Quedaron agregados de más, sin pedirse en el login: `email`, `instagram_manage_messages`, Live Video API.
+- Facebook Login for Business: Client OAuth y Web OAuth activados, HTTPS y modo estricto activados,
+  redirect URI `https://misocial-ia.castilloconsultores.workers.dev/auth/callback` validada.
+- Configuración `misocial-ia`, `config_id` `890216964059448` (token de usuario; páginas e Instagram; los 8 permisos).
