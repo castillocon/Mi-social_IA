@@ -99,3 +99,11 @@ Validado por el usuario en ventana de incógnito:
 - Facebook Login for Business: Client OAuth y Web OAuth activados, HTTPS y modo estricto activados,
   redirect URI `https://misocial-ia.castilloconsultores.workers.dev/auth/callback` validada.
 - Configuración `misocial-ia`, `config_id` `890216964059448` (token de usuario; páginas e Instagram; los 8 permisos).
+
+## 2026-10-09 — FASE 3, pasos 4–6
+
+- App settings → Básica: dominios workers.dev de la app y del Worker público, URLs de privacidad, términos y
+  **URL de instrucciones** de eliminación de datos (no se usa el callback firmado por ahora), email de contacto.
+- Secrets cargados en `misocial-ia`: `META_APP_ID`, `META_APP_SECRET`, `META_CONFIG_ID`, `TOKEN_ENC_KEY`.
+- Graph API Explorer (`me/accounts`): página **Choco.uy** `103542077711873`, Instagram business account
+  `17841420719322291`; tasks incluyen `MANAGE`, `CREATE_CONTENT` y `MODERATE`.
