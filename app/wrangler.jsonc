@@ -31,10 +31,9 @@
   "vars": {
     "APP_NAME": "Mi@Social_ia",
     "META_API_VERSION": "v26.0",
-    // Reemplazar CAMBIAR por el subdominio workers.dev de la cuenta (FASE 2).
-    "PUBLIC_BASE_URL": "https://misocial-ia.CAMBIAR.workers.dev",
+    "PUBLIC_BASE_URL": "https://misocial-ia.castilloconsultores.workers.dev",
     // Imágenes servidas por el propio Worker en una ruta pública (Instagram necesita una URL pública).
-    "MEDIA_BASE_URL": "https://misocial-ia.CAMBIAR.workers.dev/media",
+    "MEDIA_BASE_URL": "https://misocial-ia.castilloconsultores.workers.dev/media",
     // Completar en FASE 2 con los datos de la aplicación de Access.
     "ACCESS_TEAM_DOMAIN": "",
     "ACCESS_AUD": "",
